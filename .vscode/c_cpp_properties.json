@@ -1,17 +1,24 @@
 {
   "configurations": [
     {
-      "name": "windows-msvc-x64",
+      "name": "Win32-gcc",
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "compilerPath": "cl.exe",
+      "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
       "cStandard": "c11",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "windows-msvc-x64",
-      "compilerArgs": [
-        ""
-      ]
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64"
+    },
+    {
+      "name": "Win32-g++",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64"
     }
   ],
   "version": 4
