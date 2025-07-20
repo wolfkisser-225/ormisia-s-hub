@@ -1,6 +1,7 @@
 # 忽略所有 .exe 文件
 *.exe
-
+*.class
+*.pdb
 # 忽略编译输出目录
 build/
 Debug/
