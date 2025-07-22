@@ -36,26 +36,29 @@ static void md5_transform(uint32_t state[4], const uint8_t block[MD5_BLOCK_SIZE]
     #define ROTATE_LEFT(x, n) (((x) << (n)) | ((x) >> (32 - (n))))
     
     for (int i = 0; i < 64; i++) {
-        uint32_t f, g, s;
+        uint32_t f, g;
+        uint32_t temp;
         if (i < 16) {
             f = F(b, c, d);
             g = i;
+            temp = ROTATE_LEFT(a + f + MD5_K[i] + x[g], 7) + b;
         } else if (i < 32) {
             f = G(b, c, d);
             g = (5*i + 1) % 16;
+            temp = ROTATE_LEFT(a + f + MD5_K[i] + x[g], 12) + b;
         } else if (i < 48) {
             f = H(b, c, d);
             g = (3*i + 5) % 16;
+            temp = ROTATE_LEFT(a + f + MD5_K[i] + x[g], 17) + b;
         } else {
             f = I(b, c, d);
             g = (7*i) % 16;
+            temp = ROTATE_LEFT(a + f + MD5_K[i] + x[g], 22) + b;
         }
-        s = i % 4;
-        f += a + MD5_K[i] + x[g];
-        b = d;
+        a = d;
         d = c;
         c = b;
-        a = ROTATE_LEFT(f, (s << 1) + 1) + a;
+        b = temp;
     }
     
     #undef F

@@ -214,10 +214,12 @@ static void test_sort() {
                 data[i].name[strcspn(data[i].name, "\n")] = 0; // 移除换行符
                 
                 // 计算MD5哈希
+                // 仅基于结构体的name字段计算哈希值
                 md5_init(&ctx);
                 md5_update(&ctx, (const uint8_t*)data[i].name, strlen(data[i].name));
                 md5_final(&ctx, digest);
                 data[i].hash = *(uint32_t*)digest;
+                printf("为 '%s' 生成哈希值: 0x%08X\n", data[i].name, data[i].hash);
                 
                 sort_array_insert(arr, &data[i]);
             }
@@ -244,8 +246,12 @@ static void test_sort() {
                 sort_array_insert(arr_int, &int_data[i]);
             
             printf("\n=== 整数排序测试 ===\n");
-            printf("排序前(全部%d个):\n", TEST_COUNT);
+            printf("排序前(总计%d个):\n", TEST_COUNT);
             for(int i = 0; i < TEST_COUNT; i++) {
+                if (TEST_COUNT > 200 && i == 100) {
+                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                    i = TEST_COUNT - 100;
+                }
                 printf("%d ", int_data[i]);
                 if((i+1) % 10 == 0) printf("\n");
             }
@@ -262,8 +268,8 @@ static void test_sort() {
             end_time = clock();
             cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
             
-            printf("排序后(全部%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
+            printf("排序后(前%d个):\n", TEST_COUNT < 100 ? TEST_COUNT : 100);
+            for(int i = 0; i < TEST_COUNT && i < 100; i++) {
                 printf("%d ", ((int*)arr_int->data)[i]);
                 if((i+1) % 10 == 0) printf("\n");
             }
@@ -277,8 +283,12 @@ static void test_sort() {
                 sort_array_insert(arr_double, &double_data[i]);
             
             printf("\n=== 双精度浮点数排序测试 ===\n");
-            printf("排序前(全部%d个):\n", TEST_COUNT);
+            printf("排序前(总计%d个):\n", TEST_COUNT);
             for(int i = 0; i < TEST_COUNT; i++) {
+                if (TEST_COUNT > 200 && i == 100) {
+                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                    i = TEST_COUNT - 100;
+                }
                 printf("%.3e ", double_data[i]);
                 if((i+1) % 5 == 0) printf("\n");
             }
@@ -295,8 +305,8 @@ static void test_sort() {
             end_time = clock();
             cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
             
-            printf("排序后(全部%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
+            printf("排序后(前%d个):\n", TEST_COUNT < 100 ? TEST_COUNT : 100);
+            for(int i = 0; i < TEST_COUNT && i < 100; i++) {
                 printf("%.3e ", ((double*)arr_double->data)[i]);
                 if((i+1) % 5 == 0) printf("\n");
             }
@@ -312,8 +322,12 @@ static void test_sort() {
             }
             
             printf("\n=== 字符排序测试 ===\n");
-            printf("排序前(全部%d个):\n", TEST_COUNT);
+            printf("排序前(总计%d个):\n", TEST_COUNT);
             for(int i = 0; i < TEST_COUNT; i++) {
+                if (TEST_COUNT > 200 && i == 100) {
+                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                    i = TEST_COUNT - 100;
+                }
                 printf("'%c' ", char_data[i]);
                 if((i+1) % 10 == 0) printf("\n");
             }
@@ -332,8 +346,8 @@ static void test_sort() {
             end_time = clock();
             cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
             
-            printf("排序后(全部%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
+            printf("排序后(前%d个):\n", TEST_COUNT < 100 ? TEST_COUNT : 100);
+            for(int i = 0; i < TEST_COUNT && i < 100; i++) {
                 printf("'%c' ", (char)((int*)arr_char->data)[i]);
                 if((i+1) % 10 == 0) printf("\n");
             }
@@ -350,8 +364,12 @@ static void test_sort() {
             }
             
             printf("\n=== 字符串排序测试 ===\n");
-            printf("排序前(全部%d个):\n", TEST_COUNT);
+            printf("排序前(总计%d个):\n", TEST_COUNT);
             for(int i = 0; i < TEST_COUNT; i++) {
+                if (TEST_COUNT > 200 && i == 100) {
+                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                    i = TEST_COUNT - 100;
+                }
                 printf("\"%s\" ", string_data[i]);
                 if((i+1) % 3 == 0) printf("\n");
             }
@@ -373,8 +391,8 @@ static void test_sort() {
             end_time = clock();
             cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
             
-            printf("排序后(全部%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
+            printf("排序后(前%d个):\n", TEST_COUNT < 100 ? TEST_COUNT : 100);
+            for(int i = 0; i < TEST_COUNT && i < 100; i++) {
                 printf("\"%s\" ", *(char**)((char*)arr_str->data + i * sizeof(char*)));
                 if((i+1) % 3 == 0) printf("\n");
             }
@@ -392,8 +410,12 @@ static void test_sort() {
             TestData* struct_copy = malloc(TEST_COUNT * sizeof(TestData));
             
             printf("\n=== 结构体排序测试 ===\n");
-            printf("排序前(全部%d个):\n", TEST_COUNT);
+            printf("排序前(总计%d个):\n", TEST_COUNT);
             for(int i = 0; i < TEST_COUNT; i++) {
+                if (TEST_COUNT > 200 && i == 100) {
+                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                    i = TEST_COUNT - 100;
+                }
                 printf("%s (原始hash: 0x%08X) ", struct_data[i].name, struct_data[i].hash);
                 if((i+1) % 3 == 0) printf("\n");
             }
@@ -407,6 +429,7 @@ static void test_sort() {
                 strncpy(struct_copy[i].name, struct_data[i].name, sizeof(struct_copy[i].name) - 1);
                 struct_copy[i].name[sizeof(struct_copy[i].name) - 1] = '\0';
 #endif
+                // 仅基于结构体的name字段计算哈希值
                 md5_init(&ctx);
                 md5_update(&ctx, (const uint8_t*)struct_copy[i].name, strlen(struct_copy[i].name));
                 md5_final(&ctx, digest);
@@ -426,12 +449,9 @@ static void test_sort() {
                     strncpy(target->name, struct_data[i].name, sizeof(target->name) - 1);
                     target->name[sizeof(target->name) - 1] = '\0';
 #endif
-                    // 为每个结构体计算唯一的哈希值
+                    // 仅基于结构体的name字段计算哈希值
                     md5_init(&ctx);
-                    // 添加一些随机性，确保每个结构体的哈希值不同
-                    char buffer[256];
-                    snprintf(buffer, sizeof(buffer), "%s_%d_%d", target->name, i, repeat);
-                    md5_update(&ctx, (const uint8_t*)buffer, strlen(buffer));
+                    md5_update(&ctx, (const uint8_t*)target->name, strlen(target->name));
                     md5_final(&ctx, digest);
                     target->hash = *(uint32_t*)digest;
                 }

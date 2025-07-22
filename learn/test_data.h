@@ -10,7 +10,7 @@
 #define TEST_DATA_H
 
 // 测试数据常量定义
-#define TEST_COUNT 100
+#define TEST_COUNT 100000
 #define MAX_STRING_LEN 20
 #define FRUIT_TYPES 5
 
