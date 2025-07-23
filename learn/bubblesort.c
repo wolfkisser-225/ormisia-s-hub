@@ -247,13 +247,28 @@ static void test_sort() {
             
             printf("\n=== 整数排序测试 ===\n");
             printf("排序前(总计%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
-                if (TEST_COUNT > 200 && i == 100) {
-                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
-                    i = TEST_COUNT - 100;
-                }
+            
+            // 输出前100个数据
+            for(int i = 0; i < 100 && i < TEST_COUNT; i++) {
                 printf("%d ", int_data[i]);
                 if((i+1) % 10 == 0) printf("\n");
+            }
+            
+            // 如果数据超过200个，直接跳到后100个
+            if (TEST_COUNT > 200) {
+                printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                
+                // 输出后100个数据
+                for(int i = TEST_COUNT - 100; i < TEST_COUNT; i++) {
+                    printf("%d ", int_data[i]);
+                    if((i+1) % 10 == 0) printf("\n");
+                }
+            } else if (TEST_COUNT > 100) {
+                // 如果数据在100-200之间，输出剩余数据
+                for(int i = 100; i < TEST_COUNT; i++) {
+                    printf("%d ", int_data[i]);
+                    if((i+1) % 10 == 0) printf("\n");
+                }
             }
             printf("\n");
             
@@ -284,13 +299,28 @@ static void test_sort() {
             
             printf("\n=== 双精度浮点数排序测试 ===\n");
             printf("排序前(总计%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
-                if (TEST_COUNT > 200 && i == 100) {
-                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
-                    i = TEST_COUNT - 100;
-                }
+            
+            // 输出前100个数据
+            for(int i = 0; i < 100 && i < TEST_COUNT; i++) {
                 printf("%.3e ", double_data[i]);
                 if((i+1) % 5 == 0) printf("\n");
+            }
+            
+            // 如果数据超过200个，直接跳到后100个
+            if (TEST_COUNT > 200) {
+                printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                
+                // 输出后100个数据
+                for(int i = TEST_COUNT - 100; i < TEST_COUNT; i++) {
+                    printf("%.3e ", double_data[i]);
+                    if((i+1) % 5 == 0) printf("\n");
+                }
+            } else if (TEST_COUNT > 100) {
+                // 如果数据在100-200之间，输出剩余数据
+                for(int i = 100; i < TEST_COUNT; i++) {
+                    printf("%.3e ", double_data[i]);
+                    if((i+1) % 5 == 0) printf("\n");
+                }
             }
             printf("\n");
             
@@ -323,13 +353,28 @@ static void test_sort() {
             
             printf("\n=== 字符排序测试 ===\n");
             printf("排序前(总计%d个):\n", TEST_COUNT);
-            for(int i = 0; i < TEST_COUNT; i++) {
-                if (TEST_COUNT > 200 && i == 100) {
-                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
-                    i = TEST_COUNT - 100;
-                }
+            
+            // 输出前100个数据
+            for(int i = 0; i < 100 && i < TEST_COUNT; i++) {
                 printf("'%c' ", char_data[i]);
                 if((i+1) % 10 == 0) printf("\n");
+            }
+            
+            // 如果数据超过200个，直接跳到后100个
+            if (TEST_COUNT > 200) {
+                printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                
+                // 输出后100个数据
+                for(int i = TEST_COUNT - 100; i < TEST_COUNT; i++) {
+                    printf("'%c' ", char_data[i]);
+                    if((i+1) % 10 == 0) printf("\n");
+                }
+            } else if (TEST_COUNT > 100) {
+                // 如果数据在100-200之间，输出剩余数据
+                for(int i = 100; i < TEST_COUNT; i++) {
+                    printf("'%c' ", char_data[i]);
+                    if((i+1) % 10 == 0) printf("\n");
+                }
             }
             printf("\n");
             
@@ -366,12 +411,20 @@ static void test_sort() {
             printf("\n=== 字符串排序测试 ===\n");
             printf("排序前(总计%d个):\n", TEST_COUNT);
             for(int i = 0; i < TEST_COUNT; i++) {
-                if (TEST_COUNT > 200 && i == 100) {
-                    printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
-                    i = TEST_COUNT - 100;
+                if (TEST_COUNT > 200) {
+                    if (i < 100) {
+                        printf("\"%s\" ", string_data[i]);
+                        if((i+1) % 3 == 0) printf("\n");
+                    } else if (i >= TEST_COUNT - 100) {
+                        printf("\"%s\" ", string_data[i]);
+                        if((i+1) % 3 == 0) printf("\n");
+                    } else if (i == 100) {
+                        printf("\n... 省略%d个数据 ...\n\n", TEST_COUNT - 200);
+                    }
+                } else {
+                    printf("\"%s\" ", string_data[i]);
+                    if((i+1) % 3 == 0) printf("\n");
                 }
-                printf("\"%s\" ", string_data[i]);
-                if((i+1) % 3 == 0) printf("\n");
             }
             printf("\n");
             
